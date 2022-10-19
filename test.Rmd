@@ -4,4 +4,4 @@ output: html_notebook
 ---
 
 
-Im trying to make a merge conflict 
+Im trying to make a merge conflict. Pizza Pizza yum yum!

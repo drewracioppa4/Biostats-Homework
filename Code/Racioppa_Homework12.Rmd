@@ -1,0 +1,58 @@
+---
+title: "Homework 12"
+author: "Drew"
+date: "9/27/2022"
+output: html_document
+---
+
+Clear R's brain and turn on the dp;yr and here packages
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+Import the csv called "donnerville_percent_cover.csv" using stringsAsFactors = TRUE
+```{r}
+ cover <- read.csv(here("Data", "donnerville_percent_cover.csv"), stringsAsFactors = TRUE)
+View(cover)
+```
+
+#Dimensions of the datatable
+```{r}
+dim(cover)
+```
+#Structure of data
+```{r}
+str(cover)
+```
+#Summary of data
+```{r}
+summary(cover)
+```
+
+#Column headings
+```{r}
+colnames(cover)
+```
+
+
+#renaming column heading "Plot" to "Plot.num"
+```{r}
+names(cover)[names(cover)=="Plot"] <- "Plot.num"
+```
+
+Average percent cover by cover type for "Donnerville 1"
+```{r}
+cover %>% filter(Site == "Donnerville 1") %>% group_by(Type) %>% summarise(avg_percent_cover = mean(Percent))
+```
+
+Determine the average percent vascular plant cover across all sites
+```{r}
+PerCov <- cover %>% filter(Type == "Vascular") %>% summarise(avg_percent == mean(Percent))
+```
+
+%>% = "And then" 
+
+This says that the Percent of Cover variable is, from the cover data frame and then filter by type, specifically all the "Vascular" plants, and then summarise the average percent by the mean of the percents. 

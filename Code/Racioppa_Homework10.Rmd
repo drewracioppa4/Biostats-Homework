@@ -1,0 +1,30 @@
+---
+title: "Racioppa_Homework10"
+author: "Drew"
+date: "9/23/2022"
+output: html_document
+---
+
+This is a homework assignment for Biostats Fall 2022 due on 9/23/22 at 10:30 in the morning
+This will include seeing how to structure data
+
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+#I imported this data table from the import dataset feature
+```{r}
+library(readr)
+Racioppa_datatable <- read_csv("Data/Racioppa_datatable.csv")
+```
+
+#I impoted this data table from the read.csv function in R
+```{r}
+DF <- read.csv(here("Data", "Racioppa_datatable.csv"), stringsAsFactors = TRUE)
+```
+
+
+

@@ -1,0 +1,42 @@
+---
+title: "Using dplyr to fix mistakes"
+author: "Drew"
+date: "10/3/2022"
+output: html_document
+---
+
+
+In this assignment I will be experimenting with using stringAsFactors = True, and the use of the Unique() function to see how it summarizes the data
+
+Clear R's brain and turn on the dplyr and here packages
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+#Importing the Data without stringAsFactors = True,   
+
+#Code 1
+```{r}
+DF <- read.csv(here("Data", "drug_resistance.csv"))
+summary(DF)
+
+```
+
+
+#Importing the Data with stringAsFactors = True
+
+#Code 2
+```{r}
+DF <- read.csv(here("Data", "drug_resistance.csv"), stringsAsFactors = TRUE)
+summary(DF)
+```
+
+#The difference in the variables is that when you run stringAsFactors = True, it uses the treatment and tech.name data as factors with certain levels, and when you dont run stringAsFactors = True, they are run as characters.
+
+#The summary for Code 1 only includes the number of length of characters, while code 2 includes the names of all the factors, and the number of each individual factor in the data set
+
+
+

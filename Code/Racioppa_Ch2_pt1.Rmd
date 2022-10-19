@@ -1,0 +1,13 @@
+---
+title: "Racioppa_Ch2_part1.Rmd"
+author: "Drew"
+date: "9/18/2022"
+output
+---
+
+```{r}
+library(readr)
+FlowerColourVisits <- read_csv("Data/FlowerColourVisits.csv")
+View(FlowerColourVisits)
+```
+

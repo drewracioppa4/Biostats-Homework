@@ -1,0 +1,49 @@
+---
+title: "Racioppa Homework 13"
+author: "Drew"
+date: "9/29/2022"
+output: html_document
+---
+
+Clear R's brain and turn on the dplyr and here packages
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+Importing the Data
+```{r}
+DF <- read.csv(here("Data", "day_one_data_for_homework13.csv"), stringsAsFactors = TRUE)
+View(DF) 
+```
+
+Notice how R changed Spaces to "."'s in the Data table when imported
+The column that had a "#" also changed to a "." when imported through R
+
+#Tree names without switch
+```{r}
+names(DF)
+```
+#Changing names and viewing new Names
+```{r}
+names(DF)[names(DF)=="Tree.."] <- "Tree_num"
+names(DF)[names(DF)=="Tree.species"] <- "Species"
+names(DF)[names(DF)=="Leaf.length"] <- "leaf_length"
+names(DF)[names(DF)=="leaf.width"] <- "leaf_width"
+names(DF)
+```
+#Nice that totally worked lets move on
+
+```{r}
+English <- DF %>%
+  filter(leaf_units == "inches")
+```
+
+```{r}
+Uniform_Date <- DF %>%
+  filter(Date == "8/24/2022")
+```
+
+

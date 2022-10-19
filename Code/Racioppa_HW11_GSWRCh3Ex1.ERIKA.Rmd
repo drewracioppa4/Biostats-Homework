@@ -1,0 +1,37 @@
+---
+title: "Homework 11"
+author: "Drew"
+date: "9/25/2022"
+output: html_document
+---
+
+This is a homework assignment for Biostats Fall of 2022 on Chapter 3 of "Getting Started with R"
+
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+```{r}
+library(readr)
+compensation <- read_csv("~/Biostats 2022/Racioppa-InClass/Data/compensation.csv")
+View(compensation)
+```
+WORK ON LEARNING TO USE THE HERE PACKAGE SO THAT YOUR DATA LOADS MORE SEAMLESSLY
+```{r} 
+library(readr)
+Compensation <- read_csv("Data/Compensation.csv")
+```
+
+#select() 
+#slice() 
+#filter() 
+#arrange() 
+#mutate() 
+#with() 
+#group_by 
+#summarise() 
+#mean() 
+#sd() 

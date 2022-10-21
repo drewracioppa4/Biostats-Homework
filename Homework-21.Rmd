@@ -1,0 +1,107 @@
+---
+title: "Homework-21"
+output: html_notebook
+---
+
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+#get the data
+```{r}
+compensation <- read.csv("Data/compensation.csv")
+```
+
+#Check out data
+```{r}
+glimpse(compensation)
+```
+
+#make first ggplot picture
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) + geom_point()
+```
+
+#No grey background
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) + geom_point() + theme_bw()
+```
+
+#Gem size increase
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) + geom_point(size = 5) + theme_bw()
+```
+
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+geom_point(size = 5) +
+xlab("Root Biomass") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+#Blue and Red
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, colour = Grazing)) +
+geom_point(size = 5) +
+xlab("Root Biomass") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+#Gem shape change
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, shape = Grazing)) +
+geom_point(size = 5) +
+xlab("Root Biomass") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+
+#Data Median with Box and Whisker plots 
+
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+geom_boxplot() +
+xlab("Grazing treatment") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+#This one has data points
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+geom_boxplot() +
+geom_point(size = 4, colour = 'lightgrey', alpha = 0.5) +
+xlab("Grazing treatment") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+
+
+## Histograms 
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram()
+```
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram(bins = 10)
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram(binwidth = 15)
+```
+
+#comparison between grazed and ungrazed
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram(binwidth = 15) +
+facet_wrap(~Grazing)
+```
+

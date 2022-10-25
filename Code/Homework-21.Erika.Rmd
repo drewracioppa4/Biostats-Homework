@@ -1,0 +1,117 @@
+---
+title: "Homework-21"
+output: html_notebook
+---
+I MOVED THIS FILE INTO THE CODE FOLDER WHERE IT BELONGS. PLEASE KEEP ALL OF YOUR CODE FILES IN YOUR CODE FOLDER.
+
+
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+#get the data
+```{r}
+compensation <- read.csv("Data/compensation.csv") #not working once I moved the file into the correct folder
+```
+BY NOW YOU SHOULD KNOW HOW TO USE THE HERE PACKAGE TO LOAD YOUR DATA:
+
+```{r}
+compensation<-read.csv(here("Data", "compensation.csv"))
+```
+
+#Check out data
+```{r}
+glimpse(compensation)
+```
+
+#make first ggplot picture
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) + geom_point()
+```
+
+#No grey background
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) + geom_point() + theme_bw()
+```
+
+#Gem size increase
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) + geom_point(size = 5) + theme_bw()
+```
+
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit)) +
+geom_point(size = 5) +
+xlab("Root Biomass") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+#Blue and Red
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, colour = Grazing)) +
+geom_point(size = 5) +
+xlab("Root Biomass") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+#Gem shape change
+```{r}
+ggplot(compensation, aes(x = Root, y = Fruit, shape = Grazing)) +
+geom_point(size = 5) +
+xlab("Root Biomass") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+
+#Data Median with Box and Whisker plots 
+
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+geom_boxplot() +
+xlab("Grazing treatment") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+#This one has data points
+```{r}
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+geom_boxplot() +
+geom_point(size = 4, colour = 'lightgrey', alpha = 0.5) +
+xlab("Grazing treatment") +
+ylab("Fruit Production") +
+theme_bw()
+```
+
+
+
+## Histograms 
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram()
+```
+
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram(bins = 10)
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram(binwidth = 15)
+```
+
+#comparison between grazed and ungrazed
+```{r}
+ggplot(compensation, aes(x = Fruit)) +
+geom_histogram(binwidth = 15) +
+facet_wrap(~Grazing)
+```
+
+YOU NEED TO DO MORE TO COMMENT YOUR CODE OUTSIDE OF CODE BLOCKS SO THAT YOUR THOUGHT PROCESSES ARE BEING CAPTURED. FOR THESE HOMEWORKS THAT HAVE YOU GO THROUGH CODE FROM THE BOOK I AM EXPECTING THAT YOU WOULD BE WRITING SOME OF THE NOTES FROM THE BOOK ABOUT WHY IT IS HAVING YOU TAKE CERTAIN STEPS.
+
+I HAVE MADE SEVERAL OF THESE COMMENTS BEFORE, SO AM ONLY GIVING YOU HALF CREDIT FOR THIS HOMEWORK. YOU NEED TO BE INCORPORTATING COMMENTS FROM HOMEWORK INTO FUTURE HOMEWORKS.ALSO, THERE IS NO HOMEWORK 19 SO YOU DON'T GET POINTS FOR THAT HOMEWORK.

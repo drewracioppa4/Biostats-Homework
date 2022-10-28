@@ -1,0 +1,158 @@
+---
+title: "Homework24draft"
+output: html_notebook
+---
+
+#This is a draft of all work done in Biostats Homeowork 24. I will be going through the first half of Chapter 5 
+
+As usual we clear everything and add our packages
+```{r}
+rm(list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+Importing the Data
+```{r}
+here::here()
+```
+#I know I should be using the here package but I forgot how it works, I think this is right though.
+```{r}
+ozone <- read_csv(here("Data", "ozone.csv"))
+Ladybird <- read_csv(here("Data", "ladybirds.csv"))
+```
+
+#Ok I added the wrong data table now I put in ladybirds_morph_colour.csv
+```{r}
+Lady <- read_csv(here("Data", "ladybirds_morph_colour.csv"))
+```
+#ok sweet
+
+Now we begin the chapter
+
+Now we are gonna checkout the data we just added
+```{r}
+glimpse(Lady)
+```
+#alright pretty neat and tiddy data, not bad at all, decent consistency but somethings arent completley identitcal
+
+Lets summarize the data shall we
+```{r}
+totals <- Lady %>%
+group_by(Habitat, morph_colour) %>%
+summarise(total.number = sum(number))
+```
+#Just following along in the book but this sumarizes the data and can be seen in the environment panel
+
+Histogram
+```{r}
+ggplot(totals, aes(x = Habitat, y = total.number,
+fill = morph_colour)) +
+geom_bar(stat = 'identity', position = 'dodge')
+```
+#Histogram looks good but the color key is wrong lets fix that
+
+```{r}
+ggplot(totals, aes(x = Habitat, y = total.number,
+fill = morph_colour)) +
+geom_bar(stat = 'identity', position = 'dodge') +
+scale_fill_manual(values = c(black = "black", red = "red"))
+```
+#nice we totally fixed that problem by "values = c(black= "black", red = "red")"
+
+Making a x^2 test feat. chisq.test(). 
+
+#Still reading but this did not work 
+```{r}
+chisq.test(Lady).
+```
+
+
+#This didnt work either, time to start reading again 
+```{r}
+chisq.test(Lady)
+```
+
+Summarize the data with a matrix
+```{r}
+lady.mat <- xtabs(number ~ Habitat + morph_colour,
+data = Lady)
+```
+#Im pretty sure this is what that is doing because it gave us a Value in the Environment window
+
+Now the x^2 test 
+```{r}
+chisq.test(lady.mat)
+```
+#This is actually really sweet, also I am writing more stuff which is much better
+
+# ‘Yates’ continuity correction refers to a little adjustment of the x2 test that makes it a bitmore reliable when the counts are small. 
+
+Assigning the values to a name
+```{r}
+lady.chi <- chisq.test(lady.mat)
+names(lady.chi)
+```
+#what good is this value? What can we do with this?
+
+Now we move to Ozone
+
+#look at the Ozone Data
+```{r}
+glimpse(Ozone)
+```
+
+#What is wrong with this?
+```{r}
+ggplot(Ozone, aes(x = Ozone)) +
+geom_histogram(binwidth = 10) +
+facet_wrap(~ Garden.location, ncol = 1) +
+theme_bw()
+```
+
+#I cant get this to work so I am going to move on. Its werid because its identical to the book.
+```{r}
+ggplot()Ozone, aes(x = Ozone)) +
+geom_histogram(binwidth = 10) +
+facet_wrap(~ Garden.location, ncol = 1) +
+theme_bw()
+```
+
+Now we do the t.test
+#cross our fingers 
+
+```{r}
+t.test(Ozone ~ Garden.location, data = Ozone)
+```
+#Damn
+
+#It didnt work because I couldnt do the last step, curses
+
+#let me try something
+```{r}
+glimpse(ozone)
+```
+#I went back and remade my Data "ozone" and not "Ozone" but alas it did not work
+
+```{r}
+ggplot(ozone, aes(x = Ozone)) +
+geom_histogram(binwidth = 10) +
+facet_wrap(~ Garden.location, ncol = 1) +
+theme_bw()
+```
+
+T.test 2.0
+
+```{r}
+t.test(Ozone ~ Garden.location, data = ozone)
+```
+
+#Ok same error message as before, time to ask for help
+
+#This would have been the T-test summary, although it did not work by any means because I could not do the T.test.
+```{r}
+var.test(Ozone ~ Garden.location, data = ozone)
+```
+
+#Alright we will get them next time

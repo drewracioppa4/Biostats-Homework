@@ -1,0 +1,158 @@
+---
+title: "Homework 25"
+output: html_notebook
+---
+
+---
+title: "Homework 25"
+output: html_notebook
+---
+
+#This is  Biostats Homeowork 25. I will be going through the second half of Chapter 5 Getting Started with R
+
+Linear Models
+
+As usual we clear everything and add our packages
+```{r}
+rm (list = ls())
+library(dplyr)
+library(ggplot2)
+library(here)
+```
+
+## Importing Data using here package
+```{r}
+here()
+plant_gr <- read.csv(here("Data", "plant.growth.rate.csv"))
+glimpse(plant_gr)
+```
+
+View the Data
+```{r}
+View(plant_gr)
+```
+
+
+Scatter Plot of Plant growth rate and the soil moisture content
+```{r}
+ggplot(plant_gr,
+aes (x = soil.moisture.content, y = plant.growth.rate)) +
+geom_point() +
+ylab("Plant Growth Rate (mm/week)") +
+theme_bw()
+```
+
+
+LM Model
+
+```{r}
+model_pgr <- lm(plant.growth.rate ~ soil.moisture.content,
+data = plant_gr)
+```
+#fit the linear model 
+
+
+Using Auto Pilot 
+#importing ggfortify 
+```{r}
+library(ggfortify)
+autoplot(model_pgr, smooth.colour = NA)
+```
+#The line represents residual errors around the fitted line
+#Top left. This panel is about the ‘systematic part’ of the model
+#Top right. This evaluates the assumption of normality of the residuals
+#Bottom left. This evaluates the assumption of equal variance
+#Bottom right. This evaluates leverage, a tool not only to detect influential data points, ones that move the gradient more than might be expected, but also to detect outliers
+
+
+Making an ANOVA
+
+```{r}
+anova(model_pgr)
+```
+#F value = 156,08 and a pvalue = 2.2e-16. This is small and thus significant.
+
+Summary of Model PGR
+```{r}
+summary(model_pgr)
+```
+#The estimates provided in the summary table (the first column) correspond to the estimates, in a linear regression, of the intercept and slope associated with the explanatory variable
+
+
+The final step - translating the model we have fitted back onto our figure of the raw data
+
+```{r}
+ggplot(plant_gr, aes(x = soil.moisture.content,
+y = plant.growth.rate)) +
+geom_point() +
+geom_smooth(method = 'lm') +
+ylab("Plant Growth Rate (mm/week)") +
+theme_bw()
+```
+#The smooth part is what shoves the linear model into the figure
+
+Analysis of variance : the one-way ANOVA
+
+#very similar to linear regression model but with catagorical data
+
+## Importing Data using here package
+```{r}
+here()
+daphnia <- read.csv(here("Data", "Daphniagrowth.csv"))
+```
+
+Checking out the Data
+```{r}
+glimpse(daphnia)
+```
+
+#Box and whisker plot to make a figure before jumping into the data
+```{r}
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) + geom_boxplot() +
+theme_bw()+ coord_flip()
+```
+
+#adding Coord flip to previous figure
+```{r}
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+geom_boxplot() +
+theme_bw() +
+coord_flip()
+```
+
+Construct the ANOVA
+
+```{r}
+model_grow <- lm(growth.rate ~ parasite, data = daphnia)
+```
+
+Check the assumptions 
+
+```{r}
+autoplot(model_grow, smooth.colour = NA)
+```
+
+
+MAKING AN INFERENCE FROM A ONE-WAY ANOVA
+
+```{r}
+anova(model_grow)
+```
+#low P-value again 
+
+Summary
+```{r}
+summary(model_grow)
+```
+Different from Linear Regression Model. 
+#So, in an ANOVA framework, we can assume that the word ‘(Intercept)’represents the first level of the alphabetically ordered treatment levels.. So, in the summary table, the numbers associated with each parasite are differences between growth rates associated with that parasite and the control. This is why they are all negative. These negative distances, or contrasts, are the lengths of the black lines 
+
+
+The mean growth rates
+```{r}
+sumDat<-daphnia %>%
+group_by(parasite) %>%
+summarise(meanGR = mean(growth.rate))
+```
+
+
